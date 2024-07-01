@@ -11,7 +11,6 @@ export const useHotelStore = defineStore({
   actions: {
     setHotels(hotels: Hotel[]) {
       this.hotels = hotels
-    //   console.log('Store updated with hotels:', this.hotels)
     },
     selectHotel(hotel: Hotel) {
       if (!this.selectedHotels.find(h => h.id === hotel.id)) {
