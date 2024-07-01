@@ -4,28 +4,26 @@
 			<v-row>
 				<v-col cols="12" md="4">
 					<v-autocomplete v-model="destination" :items="stateNames" label="Destino" outlined
-						:rules="[rules.required]"></v-autocomplete>
+						:rules="[rules.required]" placeholder="Selecione o destino..." />
 				</v-col>
-				<v-col cols="12" md="3">
+				<v-col cols="12" md="2">
 					<v-text-field v-model="checkIn" label="Check-in" type="date" outlined
 						:rules="[rules.required]"></v-text-field>
 				</v-col>
-				<v-col cols="12" md="3">
+				<v-col cols="12" md="2">
 					<v-text-field v-model="checkOut" label="Check-out" type="date" outlined
 						:rules="[rules.required]"></v-text-field>
 				</v-col>
-				<v-col cols="12" md="1">
+				<v-col cols="12" md="2">
 					<v-text-field v-model="rooms" label="Quartos" type="number" min="1" outlined
 						:rules="[rules.required, rules.min1]"></v-text-field>
 				</v-col>
-				<v-col cols="12" md="1">
+				<v-col cols="12" md="2">
 					<v-text-field v-model="guests" label="Hóspedes" type="number" min="1" outlined
 						:rules="[rules.required, rules.min1]"></v-text-field>
 				</v-col>
-			</v-row>
-			<v-row>
 				<v-col cols="12" md="12">
-					<v-btn type="submit" color="primary" class="mb-10">Pesquisar</v-btn>
+					<v-btn type="submit" color="primary">Pesquisar</v-btn>
 				</v-col>
 			</v-row>
 		</v-form>

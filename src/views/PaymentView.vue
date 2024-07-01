@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-row>
-			<v-col cols="12" md="6">
+			<v-col cols="12" md="6" v-if="!formSubmitted">
 				<v-card>
 					<v-card-title>{{ hotel.name }}</v-card-title>
 					<v-card-subtitle>Preço: R${{ hotel.price }} diária</v-card-subtitle>
@@ -23,7 +23,7 @@
 					</v-card-text>
 				</v-card>
 			</v-col>
-			<v-col cols="12" md="6">
+			<v-col cols="12" md="6" v-if="!formSubmitted">
 				<v-form ref="form" @submit.prevent="reserve">
 					<v-row>
 						<v-col cols="12">
@@ -56,6 +56,15 @@
 					</v-row>
 				</v-form>
 			</v-col>
+			<v-row v-if="formSubmitted" class="justify-center align-center" style="min-height: 100vh;">
+				<v-col cols="12" class="text-center booking">
+					<h2>Reserva Confirmada</h2>
+					<img src="../assets/checkout.png" alt="Reserva Completa" class="banner" />
+					<v-col cols="12" class="text-center">
+						<v-btn color="primary" @click="goHome">Voltar para a Home</v-btn>
+					</v-col>
+				</v-col>
+			</v-row>
 		</v-row>
 	</v-container>
 </template>
@@ -76,6 +85,8 @@ export default defineComponent({
 			expiryDate: '',
 			cvv: '',
 			hotel: {} as Hotel,
+			allFieldsFilled: false,
+			formSubmitted: false,
 			rules: {
 				required: (value: string) => !!value || 'Campo obrigatório.'
 			}
@@ -91,24 +102,48 @@ export default defineComponent({
 		}
 	},
 	methods: {
-		reserve() {
-			const form = this.$refs.form as any
-			if (form.validate()) {
-				console.log('Reserva feita:', {
-					name: this.name,
-					contact: this.contact,
-					cardName: this.cardName,
-					cardNumber: this.cardNumber,
-					expiryDate: this.expiryDate,
-					cvv: this.cvv,
-					hotel: this.hotel
-				})
-			}
-		}
-	}
+    checkFields() {
+        this.allFieldsFilled = !!this.name && !!this.contact && !!this.cardName && !!this.cardNumber &&
+            !!this.expiryDate && !!this.cvv;
+    },
+    reserve() {
+        const form = this.$refs.form as any;
+        this.checkFields();
+        if (form.validate() && this.allFieldsFilled) {
+            console.log('Reserva feita:', {
+                name: this.name,
+                contact: this.contact,
+                cardName: this.cardName,
+                cardNumber: this.cardNumber,
+                expiryDate: this.expiryDate,
+                cvv: this.cvv,
+                hotel: this.hotel
+            });
+            this.formSubmitted = true;
+        } else {
+            this.allFieldsFilled = false;
+        }
+    },
+    goHome() {
+        this.$router.push('/');
+    }
+}
 })
 </script>
 
-<style scoped>
-.ORIGIN {}
+<style lang="scss" scoped>
+.banner {
+	max-width: 100%;
+	height: auto;
+	margin-bottom: 20px;
+}
+
+.booking {
+	img {
+		max-width: 500px;
+	}
+}
+.v-btn {
+	margin-top: 20px;
+}
 </style>

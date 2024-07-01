@@ -14,30 +14,17 @@
 				</v-col>
 			</v-row>
 			<v-row class="mb-0">
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.wifi" label="Wi-Fi" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.parking" label="Estacionamento" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.breakfast_included" label="Café da manhã incluído" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.pool" label="Piscina" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.gym" label="Academia" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.pets_allowed" label="Pets permitidos" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.family_room" label="Quarto Familiar" />
-				</v-col>
-				<v-col cols="12" md="3">
-					<v-checkbox v-model="filters.accessibility" label="Acessibilidade" />
-				</v-col>
+				<h3>Comodidades:</h3>
+			</v-row>
+			<v-row class="mb-0">
+				<v-checkbox v-model="filters.wifi" label="Wi-Fi" />
+				<v-checkbox v-model="filters.parking" label="Estacionamento" />
+				<v-checkbox v-model="filters.breakfast_included" label="Café da manhã incluído" />
+				<v-checkbox v-model="filters.pool" label="Piscina" />
+				<v-checkbox v-model="filters.gym" label="Academia" />
+				<v-checkbox v-model="filters.pets_allowed" label="Pets permitidos" />
+				<v-checkbox v-model="filters.family_room" label="Quarto Familiar" />
+				<v-checkbox v-model="filters.accessibility" label="Acessibilidade" />
 			</v-row>
 
 			<v-row>
@@ -50,7 +37,7 @@
 		</template>
 		<v-container style="max-height: 600px; overflow-y: auto;">
 			<HotelList :hotels="filteredAndSortedHotels" :selectedHotels="selectedHotels"
-				@select-hotel="handleSelectHotel" @reserve-hotel="handleReserveHotel"
+				@select-hotel="handleSelectHotel"
 				@show-snackbar="showSnackbarMessage" />
 		</v-container>
 		<v-dialog v-model="showCompareDialog" max-width="800px">
@@ -97,7 +84,7 @@ export default defineComponent({
 		})
 
 		const hotels = computed(() => hotelStore.hotels)
-		const selectedHotels = computed(() => hotelStore.selectedHotels)
+		const selectedHotels = ref(hotelStore.selectedHotels)
 
 		const hotelsExist = computed(() => hotels.value.length > 0)
 
@@ -169,6 +156,7 @@ export default defineComponent({
 	}
 })
 </script>
+
 
 <style scoped>
 .container {

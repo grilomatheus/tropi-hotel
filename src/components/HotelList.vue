@@ -9,13 +9,25 @@
 					<v-card-title>
 						{{ hotel.name }}
 					</v-card-title>
-					<v-card-subtitle>Preço: R${{ hotel.price }} - Avaliação: {{ hotel.rating }}</v-card-subtitle>
+					<v-card-subtitle>
+						<h3>Diária: a partir de R${{ hotel.price }}</h3>
+					</v-card-subtitle>
+					<v-card-subtitle>Avaliação: <strong>{{ hotel.rating }}</strong></v-card-subtitle>
 					<v-card-actions>
-						<v-btn @click.stop="(event: Event) => selectHotel(hotel, event)">
-							Comparar
-							<v-icon v-if="isComparing(hotel)" color="primary">mdi-check-circle</v-icon>
-						</v-btn>
-						<v-btn @click.stop="(event: Event) => goToPayment(hotel, event)">Reservar</v-btn>
+						<v-row justify="space-between">
+							<v-col cols="auto">
+								<v-btn @click.stop="(event: Event) => selectHotel(hotel, event)" variant="outlined">
+									Comparar
+									<v-icon v-if="isComparing(hotel)" color="primary">mdi-check-circle</v-icon>
+								</v-btn>
+							</v-col>
+							<v-col cols="auto">
+								<v-btn color="primary" variant="elevated"
+									@click.stop="(event: Event) => goToPayment(hotel, event)">
+									Reservar
+								</v-btn>
+							</v-col>
+						</v-row>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -32,21 +44,16 @@
 					<p>Descrição: {{ selectedHotel?.description }}</p>
 					<br>
 					<h3>Comodidades</h3>
-					<p v-if="selectedHotel.wifi">WiFi: {{ selectedHotel?.wifi ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.parking">Estacionamento: {{ selectedHotel?.parking ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.pool">Piscina: {{ selectedHotel?.pool ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.restaurant">Restaurante: {{ selectedHotel?.restaurant ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.spa">Spa: {{ selectedHotel?.spa ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.gym">Academia: {{ selectedHotel?.gym ? 'Sim' : 'Não' }}</p>
-					<p v-if="selectedHotel.family_room">Quarto Familiar: {{ selectedHotel?.family_room ? 'Sim' : 'Não'
-						}}
-					</p>
-					<p v-if="selectedHotel.hot_tub">Banheira de Hidromassagem: {{ selectedHotel?.hot_tub ? 'Sim' :
-						'Não' }}</p>
-					<p v-if="selectedHotel.pets_allowed">Permite Animais: {{ selectedHotel?.pets_allowed ? 'Sim' :
-						'Não' }}</p>
-					<p v-if="selectedHotel.breakfast_included">Café da Manhã: {{ selectedHotel?.breakfast_included
-						? 'Sim' : 'Não' }}</p>
+					<p>WiFi: {{ selectedHotel?.wifi ? 'Sim' : 'Não' }}</p>
+					<p>Estacionamento: {{ selectedHotel?.parking ? 'Sim' : 'Não' }}</p>
+					<p>Piscina: {{ selectedHotel?.pool ? 'Sim' : 'Não' }}</p>
+					<p>Restaurante: {{ selectedHotel?.restaurant ? 'Sim' : 'Não' }}</p>
+					<p>Spa: {{ selectedHotel?.spa ? 'Sim' : 'Não' }}</p>
+					<p>Academia: {{ selectedHotel?.gym ? 'Sim' : 'Não' }}</p>
+					<p>Quarto Familiar: {{ selectedHotel?.family_room ? 'Sim' : 'Não'}}</p>
+					<p>Banheira de Hidromassagem: {{ selectedHotel?.hot_tub ? 'Sim' :'Não' }}</p>
+					<p>Permite Animais: {{ selectedHotel?.pets_allowed ? 'Sim' : 'Não' }}</p>
+					<p>Café da Manhã: {{ selectedHotel?.breakfast_included ? 'Sim' : 'Não' }}</p>
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
