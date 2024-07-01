@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { fetchStates } from '@/services/apiService'
+import { fetchStates } from '../services/apiService'
 
 export default defineComponent({
 	name: 'SearchComponent',

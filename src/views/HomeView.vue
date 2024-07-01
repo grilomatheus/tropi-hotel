@@ -1,6 +1,8 @@
 <template>
 	<v-container class="container">
-		<img src="../assets/banner.png" alt="Banner" class="banner" />
+		<div class="banner-container">
+			<img src="../assets/banner.png" alt="Banner" class="banner" />
+		</div>
 		<SearchComponent @search="handleSearch" />
 		<template v-if="hotelsExist">
 			<v-row class="mb-4">
@@ -38,7 +40,7 @@
 				</v-col>
 			</v-row>
 
-			<v-row class="">
+			<v-row>
 				<v-col>
 					<v-btn v-if="hotelsExist" @click="showCompareDialog = true" color="primary" class="mb-10">
 						Comparar Hotéis
@@ -173,9 +175,16 @@ export default defineComponent({
 	background-color: #e1e2d9;
 }
 
+.banner-container {
+	text-align: center;
+	margin-bottom: 16px;
+}
+
 .banner {
 	width: 300px;
-	margin-bottom: 16px;
-	margin: 0 auto;
+}
+
+.mb-10 {
+	margin-bottom: 10px;
 }
 </style>

@@ -29,17 +29,24 @@
 					<p>Avaliação: {{ selectedHotel?.rating }}</p>
 					<p>Estado: {{ selectedHotel?.state }}</p>
 					<p>Cidade: {{ selectedHotel?.city }}</p>
-					<p>WiFi: {{ selectedHotel?.wifi ? 'Sim' : 'Não' }}</p>
-					<p>Estacionamento: {{ selectedHotel?.parking ? 'Sim' : 'Não' }}</p>
-					<p>Piscina: {{ selectedHotel?.pool ? 'Sim' : 'Não' }}</p>
-					<p>Restaurante: {{ selectedHotel?.restaurant ? 'Sim' : 'Não' }}</p>
-					<p>Spa: {{ selectedHotel?.spa ? 'Sim' : 'Não' }}</p>
-					<p>Academia: {{ selectedHotel?.gym ? 'Sim' : 'Não' }}</p>
-					<p>Quarto Familiar: {{ selectedHotel?.family_room ? 'Sim' : 'Não' }}</p>
-					<p>Banheira de Hidromassagem: {{ selectedHotel?.hot_tub ? 'Sim' : 'Não' }}</p>
-					<p>Permite Animais: {{ selectedHotel?.pets_allowed ? 'Sim' : 'Não' }}</p>
-					<p>Café da Manhã: {{ selectedHotel?.breakfast_included ? 'Sim' : 'Não' }}</p>
 					<p>Descrição: {{ selectedHotel?.description }}</p>
+					<br>
+					<h3>Comodidades</h3>
+					<p v-if="selectedHotel.wifi">WiFi: {{ selectedHotel?.wifi ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.parking">Estacionamento: {{ selectedHotel?.parking ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.pool">Piscina: {{ selectedHotel?.pool ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.restaurant">Restaurante: {{ selectedHotel?.restaurant ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.spa">Spa: {{ selectedHotel?.spa ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.gym">Academia: {{ selectedHotel?.gym ? 'Sim' : 'Não' }}</p>
+					<p v-if="selectedHotel.family_room">Quarto Familiar: {{ selectedHotel?.family_room ? 'Sim' : 'Não'
+						}}
+					</p>
+					<p v-if="selectedHotel.hot_tub">Banheira de Hidromassagem: {{ selectedHotel?.hot_tub ? 'Sim' :
+						'Não' }}</p>
+					<p v-if="selectedHotel.pets_allowed">Permite Animais: {{ selectedHotel?.pets_allowed ? 'Sim' :
+						'Não' }}</p>
+					<p v-if="selectedHotel.breakfast_included">Café da Manhã: {{ selectedHotel?.breakfast_included
+						? 'Sim' : 'Não' }}</p>
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>

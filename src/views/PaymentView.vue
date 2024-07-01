@@ -24,27 +24,31 @@
 				</v-card>
 			</v-col>
 			<v-col cols="12" md="6">
-				<v-form @submit.prevent="reserve">
+				<v-form ref="form" @submit.prevent="reserve">
 					<v-row>
 						<v-col cols="12">
-							<v-text-field v-model="name" label="Nome" outlined required></v-text-field>
+							<v-text-field v-model="name" label="Nome" outlined :rules="[rules.required]"
+								required></v-text-field>
 						</v-col>
 						<v-col cols="12">
-							<v-text-field v-model="contact" label="Contato" outlined required></v-text-field>
+							<v-text-field v-model="contact" label="Contato" outlined :rules="[rules.required]"
+								required></v-text-field>
 						</v-col>
 						<v-col cols="12">
-							<v-text-field v-model="cardName" label="Nome no Cartão" outlined required></v-text-field>
+							<v-text-field v-model="cardName" label="Nome no Cartão" outlined :rules="[rules.required]"
+								required></v-text-field>
 						</v-col>
 						<v-col cols="12">
 							<v-text-field v-model="cardNumber" label="Número do Cartão" outlined
-								required></v-text-field>
+								:rules="[rules.required]" required></v-text-field>
 						</v-col>
 						<v-col cols="6">
 							<v-text-field v-model="expiryDate" label="Validade (MM/AA)" outlined
-								required></v-text-field>
+								:rules="[rules.required]" required></v-text-field>
 						</v-col>
 						<v-col cols="6">
-							<v-text-field v-model="cvv" label="CVV" outlined required></v-text-field>
+							<v-text-field v-model="cvv" label="CVV" outlined :rules="[rules.required]"
+								required></v-text-field>
 						</v-col>
 						<v-col cols="12">
 							<v-btn type="submit" color="primary">Reservar</v-btn>
@@ -71,7 +75,10 @@ export default defineComponent({
 			cardNumber: '',
 			expiryDate: '',
 			cvv: '',
-			hotel: {} as Hotel
+			hotel: {} as Hotel,
+			rules: {
+				required: (value: string) => !!value || 'Campo obrigatório.'
+			}
 		}
 	},
 	created() {
@@ -85,19 +92,23 @@ export default defineComponent({
 	},
 	methods: {
 		reserve() {
-			console.log('Reserva feita:', {
-				name: this.name,
-				contact: this.contact,
-				cardName: this.cardName,
-				cardNumber: this.cardNumber,
-				expiryDate: this.expiryDate,
-				cvv: this.cvv,
-				hotel: this.hotel
-			})
-			// Adicione aqui a lógica para processar o pagamento
+			const form = this.$refs.form as any
+			if (form.validate()) {
+				console.log('Reserva feita:', {
+					name: this.name,
+					contact: this.contact,
+					cardName: this.cardName,
+					cardNumber: this.cardNumber,
+					expiryDate: this.expiryDate,
+					cvv: this.cvv,
+					hotel: this.hotel
+				})
+			}
 		}
 	}
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+.ORIGIN {}
+</style>
