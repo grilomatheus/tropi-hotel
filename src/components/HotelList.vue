@@ -85,7 +85,7 @@ export default defineComponent({
 	setup(props, { emit }) {
 		const router = useRouter()
 		const showModal = ref(false)
-		const selectedHotel = ref<Hotel | null>(null)
+        const selectedHotel = ref<Hotel | null>(null);
 
 		const showHotelDetails = (hotel: Hotel) => {
 			selectedHotel.value = hotel
