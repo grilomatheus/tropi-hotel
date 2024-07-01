@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-form ref="form" @submit.prevent="validateForm">
+		<v-form ref="form" class="search-form" @submit.prevent="validateForm">
 			<v-row>
 				<v-col cols="12" md="4">
 					<v-autocomplete v-model="destination" :items="stateNames" label="Destino" outlined

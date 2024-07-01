@@ -1,45 +1,61 @@
-# tropi-hotel
+# Tropi-Hotel
 
-This template should help get you started developing with Vue 3 in Vite.
+## Sobre o Projeto
 
-## Recommended IDE Setup
+Tropi-Hotel é uma aplicação desenvolvida como parte de um teste prático de desenvolvimento Front-End utilizando Vue.js. A aplicação simula um sistema de reserva de hotéis, permitindo ao usuário pesquisar, comparar e reservar hotéis.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Funcionalidades
 
-## Type Support for `.vue` Imports in TS
+- **Pesquisa de Hotéis**: Os usuários podem inserir critérios de pesquisa como destino, datas de check-in e check-out, número de quartos e número de hóspedes.
+- **Comparação de Hotéis**: É possível selecionar múltiplos hotéis dos resultados de busca para comparar suas características lado a lado.
+- **Reserva de Quartos**: Os usuários podem reservar quartos, fornecendo informações pessoais e detalhes de pagamento.
+- **Notificações**: A aplicação notifica os usuários sobre o status de suas reservas.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Tecnologias Utilizadas
 
-## Customize configuration
+- **Vue.js 3**: Framework progressivo para construir interfaces de usuário.
+- **Pinia**: Usado para gerenciamento de estado.
+- **Vue Router**: Utilizado para a navegação na aplicação.
+- **Vuetify**: Framework de UI para Vue.js que implementa Material Design.
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+## Configuração do Projeto
 
-## Project Setup
-
-```sh
+```bash
+# Instalar dependências
 npm install
-```
 
-### Compile and Hot-Reload for Development
-
-```sh
+# Iniciar servidor de desenvolvimento
 npm run dev
-```
 
-### Type-Check, Compile and Minify for Production
-
-```sh
+# Compilar e minificar para produção
 npm run build
+
+# Executar testes unitários
+npm run test
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Estrutura do Projeto
 
-```sh
-npm run test:unit
-```
+- **src**: Pasta contendo todos os componentes Vue, plugins, serviços, rotas e armazenamentos (stores).
+- **public**: Pasta contendo recursos estáticos como ícones e imagens.
+- **tests**: Pasta contendo os testes dos componentes.
 
-### Lint with [ESLint](https://eslint.org/)
+## Testes
 
-```sh
-npm run lint
-```
+Os testes foram implementados utilizando Vitest e Vue Test Utils. Os componentes são testados para garantir que eles funcionem conforme esperado.
+
+## CI/CD
+
+O projeto utiliza GitHub Actions para CI/CD, automatizando testes e deployment a cada push no repositório.
+
+## Contribuições
+
+Contribuições são bem-vindas. Para contribuir, por favor, abra um pull request com suas alterações.
+
+## Licença
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE.md](LICENSE.md) para mais detalhes.
+
+## Autor
+
+- **Matheus Grilo** - Desenvolvedor do projeto
