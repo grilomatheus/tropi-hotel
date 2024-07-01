@@ -1,0 +1,55 @@
+[
+	{
+	  "id": 1,
+	  "name": "Hotel A",
+	  "price": 100,
+	  "rating": 4.5,
+	  "state": "Rio de Janeiro",
+	  "city": "Rio de Janeiro",
+	  "wifi": true,
+	  "parking": true,
+	  "breakfast_included": true,
+	  "pool": true,
+	  "description": "Um hotel confortável com todas as comodidades necessárias."
+	},
+	{
+	  "id": 2,
+	  "name": "Hotel B",
+	  "price": 150,
+	  "rating": 4.0,
+	  "state": "São Paulo",
+	  "city": "São Paulo",
+	  "wifi": true,
+	  "parking": false,
+	  "breakfast_included": true,
+	  "pool": false,
+	  "description": "Um hotel moderno e conveniente no coração da cidade."
+	},
+	{
+	  "id": 3,
+	  "name": "Hotel C",
+	  "price": 200,
+	  "rating": 3.5,
+	  "state": "Minas Gerais",
+	  "city": "Belo Horizonte",
+	  "wifi": false,
+	  "parking": true,
+	  "breakfast_included": false,
+	  "pool": true,
+	  "description": "Um hotel com ótima localização e preço acessível."
+	},
+	{
+	  "id": 4,
+	  "name": "Hotel D",
+	  "price": 250,
+	  "rating": 5.0,
+	  "state": "Bahia",
+	  "city": "Salvador",
+	  "wifi": true,
+	  "parking": true,
+	  "breakfast_included": true,
+	  "pool": true,
+	  "description": "Um hotel de luxo com vistas incríveis e serviço de primeira classe."
+	}
+  ]
+  
