@@ -15,7 +15,7 @@
 							Comparar
 							<v-icon v-if="isComparing(hotel)" color="primary">mdi-check-circle</v-icon>
 						</v-btn>
-						<v-btn @click.stop="(event: Event) => reserveHotel(hotel, event)">Reservar</v-btn>
+						<v-btn @click.stop="(event: Event) => goToPayment(hotel, event)">Reservar</v-btn>
 					</v-card-actions>
 				</v-card>
 			</v-col>
@@ -36,7 +36,6 @@
 					<p>Spa: {{ selectedHotel?.spa ? 'Sim' : 'Não' }}</p>
 					<p>Academia: {{ selectedHotel?.gym ? 'Sim' : 'Não' }}</p>
 					<p>Quarto Familiar: {{ selectedHotel?.family_room ? 'Sim' : 'Não' }}</p>
-					<p>Acessibilidade: {{ selectedHotel?.accessibility ? 'Sim' : 'Não' }}</p>
 					<p>Banheira de Hidromassagem: {{ selectedHotel?.hot_tub ? 'Sim' : 'Não' }}</p>
 					<p>Permite Animais: {{ selectedHotel?.pets_allowed ? 'Sim' : 'Não' }}</p>
 					<p>Café da Manhã: {{ selectedHotel?.breakfast_included ? 'Sim' : 'Não' }}</p>
@@ -52,9 +51,10 @@
 </template>
 
 <script lang="ts">
-import type { PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
-import type { Hotel } from '../types'
+import { useRouter } from 'vue-router'
+import type { PropType } from 'vue'
+import type { Hotel } from '@/types'
 
 export default defineComponent({
 	name: 'HotelList',
@@ -69,6 +69,7 @@ export default defineComponent({
 		}
 	},
 	setup(props, { emit }) {
+		const router = useRouter()
 		const showModal = ref(false)
 		const selectedHotel = ref<Hotel | null>(null)
 
@@ -86,9 +87,12 @@ export default defineComponent({
 			}
 		}
 
-		const reserveHotel = (hotel: Hotel, event: Event) => {
+		const goToPayment = (hotel: Hotel, event: Event) => {
 			event.stopPropagation()
-			emit('reserve-hotel', hotel)
+			router.push({
+				name: 'Payment',
+				query: { hotel: JSON.stringify(hotel) }
+			})
 		}
 
 		const isComparing = (hotel: Hotel) => {
@@ -100,12 +104,13 @@ export default defineComponent({
 			selectedHotel,
 			showHotelDetails,
 			selectHotel,
-			reserveHotel,
+			goToPayment,
 			isComparing
 		}
 	}
 })
 </script>
+
 
 <style scoped>
 .clickable-card {

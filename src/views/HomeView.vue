@@ -37,18 +37,23 @@
 					<v-checkbox v-model="filters.accessibility" label="Acessibilidade" />
 				</v-col>
 			</v-row>
+
+			<v-row class="">
+				<v-col>
+					<v-btn v-if="hotelsExist" @click="showCompareDialog = true" color="primary" class="mb-10">
+						Comparar Hotéis
+					</v-btn>
+				</v-col>
+			</v-row>
 		</template>
 		<v-container style="max-height: 600px; overflow-y: auto;">
 			<HotelList :hotels="filteredAndSortedHotels" :selectedHotels="selectedHotels"
 				@select-hotel="handleSelectHotel" @reserve-hotel="handleReserveHotel"
 				@show-snackbar="showSnackbarMessage" />
 		</v-container>
-		<v-btn v-if="hotelsExist" @click="showCompareDialog = true" color="primary" class="mb-10">Comparar
-			Hotéis</v-btn>
 		<v-dialog v-model="showCompareDialog" max-width="800px">
 			<CompareHotels :selectedHotels="selectedHotels" />
 		</v-dialog>
-		<ReserveHotel v-if="selectedHotel" @reserve="handleReserve" />
 		<v-snackbar v-model="showSnackbar" :timeout="3000" top right color="error">
 			Você pode comparar no máximo 3 hotéis.
 		</v-snackbar>
@@ -57,24 +62,21 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
-import { useHotelStore } from '../stores/hotel'
-import SearchComponent from '../components/SearchComponent.vue'
-import HotelList from '../components/HotelList.vue'
-import CompareHotels from '../components/CompareHotels.vue'
-import ReserveHotel from '../components/ReserveHotel.vue'
-import { fetchHotels } from '../services/apiService'
+import { useHotelStore } from '@/stores/hotel'
+import SearchComponent from '@/components/SearchComponent.vue'
+import HotelList from '@/components/HotelList.vue'
+import CompareHotels from '@/components/CompareHotels.vue'
+import { fetchHotels } from '@/services/apiService'
 
 export default defineComponent({
 	name: 'HomeView',
 	components: {
 		SearchComponent,
 		HotelList,
-		CompareHotels,
-		ReserveHotel
+		CompareHotels
 	},
 	setup() {
 		const hotelStore = useHotelStore()
-		const selectedHotel = ref(null)
 		const showCompareDialog = ref(false)
 		const showSnackbar = ref(false)
 		const sortCriteria = ref('price')
@@ -122,11 +124,15 @@ export default defineComponent({
 
 		const handleSearch = async (criteria: any) => {
 			if (criteria.destination && criteria.checkIn && criteria.checkOut && criteria.rooms && criteria.guests) {
-				const hotels = await fetchHotels()
-				const filteredHotels = hotels.filter((hotel: any) => hotel.state === criteria.destination)
-				hotelStore.setHotels(filteredHotels)
+				try {
+					const hotels = await fetchHotels()
+					const filteredHotels = hotels.filter((hotel: any) => hotel.state === criteria.destination)
+					hotelStore.setHotels(filteredHotels)
+				} catch (error) {
+					console.error("Failed to fetch hotels:", error)
+				}
 			} else {
-				console.warn("Todos os campos devem ser preenchidos corretamente antes de prosseguir com a pesquisa.");
+				console.warn("Todos os campos devem ser preenchidos corretamente antes de prosseguir com a pesquisa.")
 			}
 		}
 
@@ -138,14 +144,6 @@ export default defineComponent({
 			}
 		}
 
-		const handleReserveHotel = (hotel: any) => {
-			selectedHotel.value = hotel
-		}
-
-		const handleReserve = (_details: any) => {
-			selectedHotel.value = null
-		}
-
 		const showSnackbarMessage = () => {
 			showSnackbar.value = true
 		}
@@ -155,7 +153,6 @@ export default defineComponent({
 			hotelsExist,
 			filteredAndSortedHotels,
 			selectedHotels,
-			selectedHotel,
 			showCompareDialog,
 			showSnackbar,
 			sortCriteria,
@@ -165,8 +162,6 @@ export default defineComponent({
 			filters,
 			handleSearch,
 			handleSelectHotel,
-			handleReserveHotel,
-			handleReserve,
 			showSnackbarMessage
 		}
 	}

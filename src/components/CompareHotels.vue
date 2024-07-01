@@ -30,7 +30,7 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
-import type { Hotel } from '../types'
+import type { Hotel } from '@/types'
 
 export default defineComponent({
 	name: 'CompareHotels',
