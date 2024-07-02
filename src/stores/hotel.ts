@@ -17,6 +17,9 @@ export const useHotelStore = defineStore({
 				this.selectedHotels.push(hotel)
 			}
 		},
+		deselectHotel(hotel: Hotel) {
+			this.selectedHotels = this.selectedHotels.filter(h => h.id !== hotel.id)
+		},
 		clearSelection() {
 			this.selectedHotels = []
 		}

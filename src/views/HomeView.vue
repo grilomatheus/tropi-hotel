@@ -18,7 +18,7 @@
           @click="showCompareDialog = true"
           color="primary"
           class="mb-10"
-          prepend-icon="mdi mdi-wifimdi mdi-compare-horizontal"
+          prepend-icon="mdi mdi-wifi mdi-compare-horizontal"
         >
           Comparar Hotéis
         </v-btn>
@@ -29,6 +29,7 @@
         :hotels="filteredAndSortedHotels"
         :selectedHotels="selectedHotels"
         @select-hotel="handleSelectHotel"
+        @deselect-hotel="handleDeselectHotel"
         @show-snackbar="showSnackbarMessage"
       />
     </v-container>
@@ -58,20 +59,12 @@ export default defineComponent({
     HotelList,
     CompareHotels
   },
-  data: () => ({
-    fav: true,
-    menu: false,
-    message: false,
-    hints: true
-  }),
   setup() {
     const hotelStore = useHotelStore()
     const showCompareDialog = ref(false)
     const showSnackbar = ref(false)
     const sortCriteria = ref('price')
     const sortOrder = ref('asc')
-    const sortOptions = ['price', 'rating']
-    const sortOrderOptions = ['asc', 'desc']
     const filters = ref({
       wifi: false,
       parking: false,
@@ -84,7 +77,7 @@ export default defineComponent({
     })
 
     const hotels = computed(() => hotelStore.hotels)
-    const selectedHotels = ref(hotelStore.selectedHotels)
+    const selectedHotels = computed(() => hotelStore.selectedHotels)
 
     const hotelsExist = computed(() => hotels.value.length > 0)
 
@@ -136,14 +129,17 @@ export default defineComponent({
     }
 
     const handleSelectHotel = (hotel: any) => {
-      if (
-        selectedHotels.value.length < 3 ||
-        selectedHotels.value.some((selectedHotel) => selectedHotel.id === hotel.id)
-      ) {
-        hotelStore.selectHotel(hotel)
-      } else {
-        showSnackbar.value = true
+      if (!selectedHotels.value.some((selectedHotel) => selectedHotel.id === hotel.id)) {
+        if (selectedHotels.value.length < 3) {
+          hotelStore.selectHotel(hotel)
+        } else {
+          showSnackbar.value = true
+        }
       }
+    }
+
+    const handleDeselectHotel = (hotel: any) => {
+      hotelStore.deselectHotel(hotel)
     }
 
     const showSnackbarMessage = () => {
@@ -159,11 +155,10 @@ export default defineComponent({
       showSnackbar,
       sortCriteria,
       sortOrder,
-      sortOptions,
-      sortOrderOptions,
       filters,
       handleSearch,
       handleSelectHotel,
+      handleDeselectHotel,
       showSnackbarMessage
     }
   }

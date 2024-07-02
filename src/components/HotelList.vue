@@ -18,7 +18,11 @@
           <v-card-actions>
             <v-row justify="space-between">
               <v-col cols="auto">
-                <v-btn @click.stop="(event: Event) => selectHotel(hotel, event)" variant="outlined">
+                <v-btn
+                  @click.stop="(event: Event) => toggleCompareHotel(hotel, event)"
+                  variant="outlined"
+                  :color="isComparing(hotel) ? 'primary' : ''"
+                >
                   Comparar
                   <v-icon v-if="isComparing(hotel)" color="primary">mdi-check-circle</v-icon>
                 </v-btn>
@@ -38,67 +42,8 @@
       </v-col>
     </v-row>
 
-    <v-dialog v-model="showModal" max-width="600px">
-      <v-card>
-        <v-card-title class="headline">{{ selectedHotel?.name }}</v-card-title>
-        <v-card-text>
-          <p>
-            Preço: <strong>R${{ selectedHotel?.price }}</strong> diária
-          </p>
-          <p>
-            Avaliação: <strong>{{ selectedHotel?.rating }}</strong>
-          </p>
-          <p>Estado: {{ selectedHotel?.state }}</p>
-          <p>Cidade: {{ selectedHotel?.city }}</p>
-          <p>Descrição: {{ selectedHotel?.description }}</p>
-          <br />
-          <h3>Comodidades</h3>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-wifi</v-icon> WiFi:
-            {{ selectedHotel?.wifi ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-parking</v-icon>Estacionamento:
-            {{ selectedHotel?.parking ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-pool</v-icon>Piscina:
-            {{ selectedHotel?.pool ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-silverware-fork-knife</v-icon>Restaurante:
-            {{ selectedHotel?.restaurant ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-spa</v-icon>Spa:
-            {{ selectedHotel?.spa ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-dumbbell</v-icon>Academia:
-            {{ selectedHotel?.gym ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-human-male-male-child</v-icon>Quarto Familiar:
-            {{ selectedHotel?.family_room ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-hot-tub</v-icon>Banheira de Hidromassagem:
-            {{ selectedHotel?.hot_tub ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-paw</v-icon>Permite Animais:
-            {{ selectedHotel?.pets_allowed ? 'Sim' : 'Não' }}
-          </p>
-          <p class="d-flex align-center">
-            <v-icon class="mr-2">mdi mdi-coffee</v-icon>Café da Manhã:
-            {{ selectedHotel?.breakfast_included ? 'Sim' : 'Não' }}
-          </p>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" @click="showModal = false">Fechar</v-btn>
-        </v-card-actions>
-      </v-card>
+    <v-dialog v-model="showModal" max-width="600px" v-if="selectedHotel">
+      <HotelDetailsCard :hotel="selectedHotel" />
     </v-dialog>
   </v-container>
 </template>
@@ -108,9 +53,13 @@ import { defineComponent, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import type { PropType } from 'vue'
 import type { Hotel } from '@/types'
+import HotelDetailsCard from '@/components/HotelDetailsCard.vue'
 
 export default defineComponent({
   name: 'HotelList',
+  components: {
+    HotelDetailsCard
+  },
   props: {
     hotels: {
       type: Array as PropType<Hotel[]>,
@@ -131,12 +80,12 @@ export default defineComponent({
       showModal.value = true
     }
 
-    const selectHotel = (hotel: Hotel, event: Event) => {
+    const toggleCompareHotel = (hotel: Hotel, event: Event) => {
       event.stopPropagation()
-      if (props.selectedHotels.length < 3 || isComparing(hotel)) {
-        emit('select-hotel', hotel)
+      if (isComparing(hotel)) {
+        emit('deselect-hotel', hotel)
       } else {
-        emit('show-snackbar')
+        emit('select-hotel', hotel)
       }
     }
 
@@ -156,7 +105,7 @@ export default defineComponent({
       showModal,
       selectedHotel,
       showHotelDetails,
-      selectHotel,
+      toggleCompareHotel,
       goToPayment,
       isComparing
     }

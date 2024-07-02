@@ -1,44 +1,58 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col v-for="hotel in selectedHotels" :key="hotel.id" cols="12" md="4">
-        <v-card>
-          <v-card-title>{{ hotel.name }}</v-card-title>
-          <v-card-subtitle>Diárias a partir de R${{ hotel.price }} </v-card-subtitle>
-          <v-card-subtitle>Avaliação: {{ hotel.rating }}</v-card-subtitle>
-          <v-card-text>
-            <p>Estado: {{ hotel.state }}</p>
-            <p>Cidade: {{ hotel.city }}</p>
-            <p>WiFi: {{ hotel.wifi ? 'Sim' : 'Não' }}</p>
-            <p>Estacionamento: {{ hotel.parking ? 'Sim' : 'Não' }}</p>
-            <p>Piscina: {{ hotel.pool ? 'Sim' : 'Não' }}</p>
-            <p>Restaurante: {{ hotel.restaurant ? 'Sim' : 'Não' }}</p>
-            <p>Spa: {{ hotel.spa ? 'Sim' : 'Não' }}</p>
-            <p>Academia: {{ hotel.gym ? 'Sim' : 'Não' }}</p>
-            <p>Quarto Familiar: {{ hotel.family_room ? 'Sim' : 'Não' }}</p>
-            <p>Acessibilidade: {{ hotel.accessibility ? 'Sim' : 'Não' }}</p>
-            <p>Hidromassagem: {{ hotel.hot_tub ? 'Sim' : 'Não' }}</p>
-            <p>Permite Animais: {{ hotel.pets_allowed ? 'Sim' : 'Não' }}</p>
-            <p>Café da Manhã: {{ hotel.breakfast_included ? 'Sim' : 'Não' }}</p>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-dialog v-model="dialog" max-width="800">
+    <v-card>
+      <v-card-title> Comparar Hotéis </v-card-title>
+      <v-card-text>
+        <v-container>
+          <v-row>
+            <v-col v-for="hotel in selectedHotels" :key="hotel.id" cols="12" md="4">
+              <HotelDetailsCard :hotel="hotel" />
+            </v-col>
+          </v-row>
+        </v-container>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue'
 import type { PropType } from 'vue'
-import { defineComponent } from 'vue'
 import type { Hotel } from '@/types'
+import HotelDetailsCard from '@/components/HotelDetailsCard.vue'
 
 export default defineComponent({
   name: 'CompareHotels',
+  components: {
+    HotelDetailsCard
+  },
   props: {
     selectedHotels: {
       type: Array as PropType<Hotel[]>,
       required: true
     }
+  },
+  setup() {
+    const dialog = ref(true)
+
+    const closeDialog = () => {
+      dialog.value = false
+    }
+
+    return {
+      dialog,
+      closeDialog
+    }
   }
 })
 </script>
+
+<style scoped>
+.hotel-card {
+  margin-bottom: 16px;
+}
+
+.v-dialog {
+  background: rgba(0, 0, 0, 0.5);
+}
+</style>

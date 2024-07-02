@@ -25,9 +25,11 @@
       <v-col cols="12" md="2">
         <v-menu v-model="menu" :close-on-content-click="false" location="end">
           <template v-slot:activator="{ props }">
-            <v-btn color="primary" v-bind="props">Comodidades</v-btn>
+            <v-row class="justify-center mt-1">
+              <v-btn color="primary" v-bind="props">Comodidades</v-btn>
+            </v-row>
           </template>
-          <v-card min-width="500">
+          <v-card min-width="300">
             <v-list>
               <v-list-item v-for="filter in filterOptions" :key="filter.prop">
                 <v-checkbox v-model="localFilters[filter.prop]" :label="filter.label" />

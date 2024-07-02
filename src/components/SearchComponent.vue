@@ -76,11 +76,11 @@ export default defineComponent({
   name: 'SearchComponent',
   data() {
     return {
-      destination: '',
-      checkIn: '',
+      destination: null,
+      checkIn: null,
       checkOut: '',
-      rooms: 1,
-      guests: 1,
+      rooms: '',
+      guests: '',
       states: [] as { id: number; name: string; abbreviation: string }[],
       stateNames: [] as string[],
       rules: {
