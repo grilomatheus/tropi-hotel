@@ -10,7 +10,7 @@
             {{ hotel.name }}
           </v-card-title>
           <v-card-subtitle>
-            <h3>Diária: a partir de R${{ hotel.price }}</h3>
+            Diária: a partir de<strong> R${{ hotel.price }}</strong>
           </v-card-subtitle>
           <v-card-subtitle
             >Avaliação: <strong>{{ hotel.rating }}</strong></v-card-subtitle

@@ -15,6 +15,7 @@
       <v-row class="justify-center">
         <v-btn
           v-if="hotelsExist"
+          :disabled="selectedHotels.length < 2"
           @click="showCompareDialog = true"
           color="primary"
           class="mb-10"
@@ -33,8 +34,8 @@
         @show-snackbar="showSnackbarMessage"
       />
     </v-container>
-    <v-dialog v-model="showCompareDialog" max-width="800px">
-      <CompareHotels :selectedHotels="selectedHotels" />
+    <v-dialog v-model="showCompareDialog" max-width="800px" @click:outside="closeDialog">
+      <CompareHotels :selectedHotels="selectedHotels" @close="closeDialog" />
     </v-dialog>
     <v-snackbar v-model="showSnackbar" :timeout="3000" top right color="error">
       Você pode comparar no máximo 3 hotéis.
@@ -146,6 +147,10 @@ export default defineComponent({
       showSnackbar.value = true
     }
 
+    const closeDialog = () => {
+      showCompareDialog.value = false
+    }
+
     onMounted(() => {
       hotelStore.setHotels([])
     })
@@ -163,7 +168,8 @@ export default defineComponent({
       handleSearch,
       handleSelectHotel,
       handleDeselectHotel,
-      showSnackbarMessage
+      showSnackbarMessage,
+      closeDialog
     }
   }
 })

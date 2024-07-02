@@ -1,8 +1,13 @@
 <template>
   <v-card>
     <v-card-title>{{ hotel.name }}</v-card-title>
-    <v-card-subtitle>Diárias a partir de R${{ hotel.price }}</v-card-subtitle>
-    <v-card-subtitle>Avaliação: {{ hotel.rating }}</v-card-subtitle>
+    <v-card-subtitle
+      >Diárias a partir de <span class="price">R${{ hotel.price }}</span></v-card-subtitle
+    >
+    <v-card-subtitle>
+      Avaliação:
+      <strong>{{ hotel.rating }}</strong>
+    </v-card-subtitle>
     <v-card-text>
       <p>Estado: {{ hotel.state }}</p>
       <p>Cidade: {{ hotel.city }}</p>
@@ -58,6 +63,10 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.price {
+  font-weight: 600;
+  color: #15870b;
+}
 .d-flex {
   display: flex;
   align-items: center;

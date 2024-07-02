@@ -1,7 +1,9 @@
 <template>
   <v-dialog v-model="dialog" max-width="800">
     <v-card>
-      <v-card-title> Comparar Hotéis </v-card-title>
+      <v-card-title>
+        <span>Comparar Hotéis</span>
+      </v-card-title>
       <v-card-text>
         <v-container>
           <v-row>
@@ -16,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import type { PropType } from 'vue'
 import type { Hotel } from '@/types'
 import HotelDetailsCard from '@/components/HotelDetailsCard.vue'
@@ -32,12 +34,19 @@ export default defineComponent({
       required: true
     }
   },
-  setup() {
+  setup(props, { emit }) {
     const dialog = ref(true)
 
     const closeDialog = () => {
       dialog.value = false
+      emit('close')
     }
+
+    watch(dialog, (val) => {
+      if (!val) {
+        emit('close')
+      }
+    })
 
     return {
       dialog,
