@@ -29,7 +29,7 @@
               <v-btn color="primary" v-bind="props">Comodidades</v-btn>
             </v-row>
           </template>
-          <v-card min-width="300">
+          <v-card class="filter-params">
             <v-list>
               <v-list-item v-for="filter in filterOptions" :key="filter.prop">
                 <v-checkbox v-model="localFilters[filter.prop]" :label="filter.label" />
@@ -106,3 +106,13 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+.filter-params {
+  max-height: 300px;
+  overflow-y: auto;
+  .v-input__details {
+    display: none !important;
+  }
+}
+</style>

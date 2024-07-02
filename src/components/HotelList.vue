@@ -91,9 +91,12 @@ export default defineComponent({
 
     const goToPayment = (hotel: Hotel, event: Event) => {
       event.stopPropagation()
+
       router.push({
         name: 'Payment',
-        query: { hotel: JSON.stringify(hotel) }
+        query: {
+          hotel: JSON.stringify(hotel)
+        }
       })
     }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="container">
+  <v-container class="container" fluid>
     <v-row class="justify-center">
       <v-col cols="12" md="4">
         <v-img class="banner-home" src="banner.png" :width="300" aspect-ratio="16/9" cover />
@@ -18,7 +18,7 @@
           @click="showCompareDialog = true"
           color="primary"
           class="mb-10"
-          prepend-icon="mdi mdi-wifi mdi-compare-horizontal"
+          prepend-icon="mdi mdi-compare-horizontal"
         >
           Comparar Hotéis
         </v-btn>
@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed } from 'vue'
+import { defineComponent, ref, computed, onMounted } from 'vue'
 import { useHotelStore } from '@/stores/hotel'
 import SearchBar from '@/components/SearchBar.vue'
 import HotelList from '@/components/HotelList.vue'
@@ -145,6 +145,10 @@ export default defineComponent({
     const showSnackbarMessage = () => {
       showSnackbar.value = true
     }
+
+    onMounted(() => {
+      hotelStore.setHotels([])
+    })
 
     return {
       hotels,

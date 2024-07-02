@@ -2,12 +2,28 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-img class="banner-checkout" src="banner.png" :width="300" aspect-ratio="16/9" cover />
+        <v-img
+          class="banner-checkout"
+          src="banner.png"
+          :width="300"
+          aspect-ratio="16/9"
+          @click="goHome"
+          cover
+        />
       </v-col>
     </v-row>
     <v-row>
       <v-col cols="12" md="6" v-if="!formSubmitted">
-        <HotelDetailsCard :hotel="hotel" />
+        <HotelDetailsCard :hotel="hotel">
+          <v-divider class="my-4" />
+          <p>Check-in: {{ formattedCheckIn }}</p>
+          <p>Check-out: {{ formattedCheckOut }}</p>
+          <p>Total de dias: {{ totalDays }}</p>
+          <p>
+            Valor total da(s) diária(s):
+            <span class="total-price">{{ formattedTotalPrice }}</span>
+          </p>
+        </HotelDetailsCard>
       </v-col>
       <v-col cols="12" md="6" v-if="!formSubmitted">
         <v-form ref="form" @submit.prevent="reserve">
@@ -34,7 +50,7 @@
                 outlined
                 :rules="[rules.required]"
                 required
-              ></v-text-field>
+              />
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -46,7 +62,7 @@
                 outlined
                 :rules="[rules.required]"
                 required
-              ></v-text-field>
+              />
             </v-col>
             <v-col cols="12">
               <v-text-field
@@ -58,7 +74,7 @@
                 outlined
                 :rules="[rules.required]"
                 required
-              ></v-text-field>
+              />
             </v-col>
             <v-col cols="6">
               <v-text-field
@@ -70,7 +86,7 @@
                 outlined
                 :rules="[rules.required]"
                 required
-              ></v-text-field>
+              />
             </v-col>
             <v-col cols="6">
               <v-text-field
@@ -82,7 +98,7 @@
                 outlined
                 :rules="[rules.required]"
                 required
-              ></v-text-field>
+              />
             </v-col>
             <v-col cols="12">
               <v-btn type="submit" color="primary">Reservar</v-btn>
@@ -92,7 +108,10 @@
       </v-col>
       <v-row v-if="formSubmitted" class="justify-center align-center" style="min-height: 50vh">
         <v-col cols="12" class="text-center booking">
-          <h2>Reserva Confirmada</h2>
+          <v-tipografy variant="h2" class="font-weight-bold text-primary" style="font-size: 24px">
+            Reserva Confirmada
+          </v-tipografy>
+          <br />
           <img src="../assets/checkout.png" alt="Reserva Completa" class="banner" />
           <v-col cols="12" class="text-center">
             <v-btn color="primary" @click="goHome">Voltar para a Home</v-btn>
@@ -104,7 +123,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { Hotel } from '@/types'
 import HotelDetailsCard from '@/components/HotelDetailsCard.vue'
@@ -123,6 +142,8 @@ export default defineComponent({
       expiryDate: '',
       cvv: '',
       hotel: {} as Hotel,
+      checkIn: '',
+      checkOut: '',
       allFieldsFilled: false,
       formSubmitted: false,
       rules: {
@@ -133,13 +154,48 @@ export default defineComponent({
   created() {
     const route = useRoute()
     const hotelParam = route.query.hotel as string
+
     if (hotelParam) {
       this.hotel = JSON.parse(hotelParam)
     } else {
       console.error('No hotel data found in route parameters.')
     }
+
+    this.checkIn = localStorage.getItem('checkIn') || ''
+    this.checkOut = localStorage.getItem('checkOut') || ''
+  },
+  computed: {
+    totalDays(): number {
+      const checkInDate = new Date(this.checkIn)
+      const checkOutDate = new Date(this.checkOut)
+      const timeDiff = checkOutDate.getTime() - checkInDate.getTime()
+      const dayDiff = timeDiff / (1000 * 3600 * 24)
+      return Math.max(dayDiff, 0) // Ensure it does not go negative
+    },
+    totalPrice(): number {
+      return this.totalDays * this.hotel.price
+    },
+    formattedTotalPrice(): string {
+      return this.totalPrice.toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      })
+    },
+    formattedCheckIn(): string {
+      return this.formatDate(this.checkIn)
+    },
+    formattedCheckOut(): string {
+      return this.formatDate(this.checkOut)
+    }
   },
   methods: {
+    formatDate(dateStr: string): string {
+      const date = new Date(dateStr)
+      const day = String(date.getDate()).padStart(2, '0')
+      const month = String(date.getMonth() + 1).padStart(2, '0')
+      const year = date.getFullYear()
+      return `${day}/${month}/${year}`
+    },
     checkFields() {
       this.allFieldsFilled =
         !!this.name &&
@@ -160,7 +216,9 @@ export default defineComponent({
           cardNumber: this.cardNumber,
           expiryDate: this.expiryDate,
           cvv: this.cvv,
-          hotel: this.hotel
+          hotel: this.hotel,
+          checkIn: this.checkIn,
+          checkOut: this.checkOut
         })
         this.formSubmitted = true
       } else {
@@ -175,6 +233,11 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.total-price {
+  font-weight: bold;
+  font-size: 16px;
+  color: #15870b;
+}
 .banner {
   max-width: 100%;
   height: auto;
@@ -182,6 +245,7 @@ export default defineComponent({
 }
 .banner-checkout {
   margin: 0 auto;
+  cursor: pointer;
 }
 .booking {
   img {

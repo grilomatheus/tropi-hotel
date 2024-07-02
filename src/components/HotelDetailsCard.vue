@@ -37,6 +37,7 @@
       <p v-if="hotel.breakfast_included" class="d-flex align-center">
         <v-icon class="mr-2">mdi-coffee</v-icon> Café da Manhã
       </p>
+      <slot></slot>
     </v-card-text>
   </v-card>
 </template>

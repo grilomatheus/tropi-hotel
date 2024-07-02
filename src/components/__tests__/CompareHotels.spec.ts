@@ -1,4 +1,3 @@
-// src/components/__tests__/CompareHotels.spec.ts
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import CompareHotels from '../CompareHotels.vue'

@@ -14,7 +14,7 @@
             placeholder="Selecione o destino..."
           />
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="checkIn"
             label="Check-in"
@@ -25,7 +25,7 @@
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="checkOut"
             label="Check-out"
@@ -36,7 +36,7 @@
             :rules="[rules.required]"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="rooms"
             label="Quartos"
@@ -48,7 +48,7 @@
             :rules="[rules.required, rules.min1]"
           ></v-text-field>
         </v-col>
-        <v-col cols="12" md="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="guests"
             label="Hóspedes"
@@ -77,7 +77,7 @@ export default defineComponent({
   data() {
     return {
       destination: null,
-      checkIn: null,
+      checkIn: '',
       checkOut: '',
       rooms: '',
       guests: '',
@@ -106,6 +106,8 @@ export default defineComponent({
       }
     },
     searchHotels() {
+      localStorage.setItem('checkIn', this.checkIn)
+      localStorage.setItem('checkOut', this.checkOut)
       this.$emit('search', {
         destination: this.destination,
         checkIn: this.checkIn,
