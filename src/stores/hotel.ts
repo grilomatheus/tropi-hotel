@@ -1,6 +1,5 @@
-// src/stores/hotel.ts
 import { defineStore } from 'pinia'
-import type { Hotel } from '../types'
+import type { Hotel } from '@/types'
 
 export const useHotelStore = defineStore({
 	id: 'hotel',

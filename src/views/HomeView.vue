@@ -5,7 +5,7 @@
         <v-img class="banner-home" src="banner.png" :width="300" aspect-ratio="16/9" cover />
       </v-col>
     </v-row>
-    <SearchComponent @search="handleSearch" />
+    <SearchBar @search="handleSearch" />
     <template v-if="hotelsExist">
       <FilterList
         v-model:sortCriteria="sortCriteria"
@@ -45,7 +45,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue'
 import { useHotelStore } from '@/stores/hotel'
-import SearchComponent from '@/components/SearchComponent.vue'
+import SearchBar from '@/components/SearchBar.vue'
 import HotelList from '@/components/HotelList.vue'
 import FilterList from '@/components/FilterList.vue'
 import CompareHotels from '@/components/CompareHotels.vue'
@@ -54,7 +54,7 @@ import { fetchHotels } from '@/services/apiService'
 export default defineComponent({
   name: 'HomeView',
   components: {
-    SearchComponent,
+    SearchBar,
     FilterList,
     HotelList,
     CompareHotels

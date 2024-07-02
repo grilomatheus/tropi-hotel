@@ -73,7 +73,7 @@ import { defineComponent } from 'vue'
 import { fetchStates } from '../services/apiService'
 
 export default defineComponent({
-  name: 'SearchComponent',
+  name: 'SearchBar',
   data() {
     return {
       destination: null,
